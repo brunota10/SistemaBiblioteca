@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html ng-app="alunoModule">
+<head>
+	<meta-charset="utf-8">
+	<title>aluno</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/ui-bootstrap-tpls-0.14.1.min.js"></script>
+	<script src="control/alunoControl.js"></script>
+</head>
+<body ng-controller="alunoControl">
+	<div ng-include="'menu.html'"></div>
+	<div class="panel panel-default">
+	
+	
+		<div class="panel-heading">Cadastro de aluno</div>
+		<div class="panel-body">
+			<div>
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active">
+			    	<a href="#cadastro" aria-controls="cadastro" role="tab" data-toggle="tab">Cadastro</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados</a>
+			    </li>
+			  </ul>
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+			    <div role="tabpanel" class="tab-pane active" id="cadastro">
+			    	<form name="alunoForm" class="css-form" ng-submit="alunoForm.$valid && salvar()" novalidate>
+			    		<br>
+						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>
+				    	<div ng-show="alunoForm.$submitted">
+							<div ng-show="alunoForm.registro.$error.required">Preencha o R.A.</div>
+							<div ng-show="alunoForm.registro.$error.minlength">R.A. precisa ter pelo menos 11 caracteres</div>
+							<div ng-show="alunoForm.registro.$error.number">R.A. precisa ser numeral</div>
+							<div ng-show="alunoForm.nome.$error.required">Preencha o Nome</div>
+							<div ng-show="alunoForm.nome.$error.minlength">Nome precisa ter pelo menos 10 caracteres</div>
+		      				<div ng-show="alunoForm.telefone.$error.required">Preencha o Telefone</div>
+		      				<div ng-show="alunoForm.telefone.$error.minlength">Telefone precisa ter pelo menos 8 caracteres</div>
+		      				<div ng-show="alunoForm.endereco.$error.required">Preencha o Endereço</div>
+		      				<div ng-show="alunoForm.mail.$error.required">Preencha o E-mail</div>
+		      				<div ng-show="alunoForm.mail.$error.email">E-mail com formato inválido</div>
+		    		  	</div> 
+		    		  	<br>
+		    		  	<button type="button" class="btn btn-info" ng-click="novo()">Novo</button>
+						<button type="submit" class="btn btn-success">Salvar</button>
+						<button type="button" class="btn btn-danger" ng-click="excluir()">Excluir</button>
+						<hr/>
+					  <div class="form-group col-md-2">
+					    <label for="exampleInputCodigo">Codigo</label>
+					    <input type="number" disabled="true" class="form-control" ng-model="aluno.codigo" placeholder="Codigo">
+					  </div>
+					  
+					  <div class="form-group col-md-4">
+					    <label for="exampleInputNome">Registro Acadêmico</label>
+					    <input type="number" class="form-control" ng-model="aluno.ra" name="registro" placeholder="Insira o número do R.A." required="" ng-minlength="11">
+					  </div>
+					  
+					  <div class="form-group col-md-6">
+					    <label for="exampleInputCargo">Nome</label>
+					    <input type="text" class="form-control" ng-model="aluno.nome" name="nome" placeholder="Insira o Nome" required="" ng-minlength="10">
+					  </div>
+
+					  <div class="form-group col-md-2">
+					    <label for="exampleInputEndereco">Telefone</label>
+					    <input type="text" class="form-control" ng-model="aluno.telefone" name="telefone" placeholder="Insira o Telefone" required="" ng-minlength="8">
+					  </div>
+
+					  <div class="form-group col-md-6">
+					    <label for="exampleInputCidade">Endereço</label>
+					    <input type="text" class="form-control" ng-model="aluno.endereco" name="endereco" placeholder="Insira o Endereço" required="">
+					  </div>
+
+					  <div class="form-group col-md-4">
+					    <label for="exampleInputCep">E-mail</label>
+					    <input type="text" class="form-control" ng-model="aluno.email" name="mail" placeholder="Insira o E-mail" required="">
+					  </div>
+					</form>
+			    </div>
+			    <div role="tabpanel" class="tab-pane" id="dados">
+				<br>
+				<input type="text" class="form-control" ng-model="criterio" 
+				placeholder="O que voce esta procurando?" /><br>
+			    	<table class="table table-hover">
+			    		<th>Codigo</th><th>R.A.</th><th>Nome</th><th>Telefone</th><th>Endereço</th><th>E-mail</th>
+
+			    		<tr ng-repeat="alunoTabela in alunos | filter:criterio" ng-click="seleciona(alunoTabela);">
+			    			<td>{{alunoTabela.codigo}}</td><td>{{alunoTabela.ra}}</td><td>{{alunoTabela.nome}}</td><td>{{alunoTabela.telefone}}</td>
+			    			<td>{{alunoTabela.endereco}}</td><td>{{alunoTabela.email}}</td>
+			    		</tr>
+					</table>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

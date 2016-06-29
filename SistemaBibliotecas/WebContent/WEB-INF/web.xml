@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>SistemaBibliotecas</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  <servlet-mapping>
+    <servlet-name>javax.ws.rs.core.Application</servlet-name>
+    <url-pattern>/rs/*</url-pattern>
+  </servlet-mapping>
+  
+  <security-constraint>
+		<display-name>Index</display-name>
+		<web-resource-collection>
+			<web-resource-name>index</web-resource-name>
+			<url-pattern>/index.html</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>*</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<display-name>Menu</display-name>
+		<web-resource-collection>
+			<web-resource-name>menu</web-resource-name>
+			<url-pattern>/menu.html</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>*</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+		    <web-resource-name>aluno</web-resource-name>
+			<url-pattern>/aluno.html</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>*</role-name>
+		</auth-constraint>
+	</security-constraint>	
+	
+	<security-constraint>
+		<web-resource-collection>
+		    <web-resource-name>acervo</web-resource-name>
+			<url-pattern>/acervo.html</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>*</role-name>
+		</auth-constraint>
+	</security-constraint>	
+	
+		<security-constraint>
+		<web-resource-collection>
+		    <web-resource-name>emprestimo</web-resource-name>
+			<url-pattern>/emprestimo.html</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>BIB_admin</role-name>
+			<role-name>BIB_cadastro</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+	<display-name>Administracao</display-name>
+	<web-resource-collection>
+		<web-resource-name>administracao</web-resource-name>
+		<url-pattern>/404.html</url-pattern>
+		<http-method>GET</http-method>
+		<http-method>POST</http-method>
+		<http-method>PUT</http-method>
+		<http-method>DELETE</http-method>
+	</web-resource-collection>
+	<auth-constraint>
+		<role-name>*</role-name>
+	</auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+	<display-name>Administracao</display-name>
+	<web-resource-collection>
+		<web-resource-name>administracao</web-resource-name>
+		<url-pattern>/403.html</url-pattern>
+		<http-method>GET</http-method>
+		<http-method>POST</http-method>
+		<http-method>PUT</http-method>
+		<http-method>DELETE</http-method>
+	</web-resource-collection>
+	<auth-constraint>
+		<role-name>*</role-name>
+	</auth-constraint>
+  </security-constraint>
+  
+	<security-role>
+		<role-name>BIB_admin</role-name>
+	</security-role>
+	<security-role>
+		<role-name>BIB_consulta</role-name>
+	</security-role>
+	<security-role>
+		<role-name>BIB_cadastro</role-name>
+	</security-role>
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login.html</form-login-page>
+			<form-error-page>/login_erro.html</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<error-page>
+		<error-code>403</error-code>
+		<location>/403.html</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.html</location>
+	</error-page>
+  
+</web-app>

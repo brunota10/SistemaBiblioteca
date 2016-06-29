@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app="acervoModule">
+<head>
+	<meta-charset="utf-8">
+	<title>acervo</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="control/acervoControl.js"></script>
+</head>
+<body ng-controller="acervoControl">
+	<div ng-include="'menu.html'"></div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Cadastro de acervo</div>
+		<div class="panel-body">
+			<div>
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active">
+			    	<a href="#cadastro" aria-controls="cadastro" role="tab" data-toggle="tab">Cadastro</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados</a>
+			    </li>
+			  </ul>
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+			    <div role="tabpanel" class="tab-pane active" id="cadastro">
+			    	<form name="Acervoform" class="css-form" ng-submit="Acervoform.$valid && salvar()" novalidate>
+			    		<br>
+						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>
+				    	<div ng-show="Acervoform.$submitted">
+							<div ng-show="Acervoform.descricao.$error.required">Preencha a Descrição</div>
+							<div ng-show="Acervoform.descricao.$error.minlength">Descrição precisa ter pelo menos 8 caracteres</div>
+							<div ng-show="Acervoform.tipo.$error.required">Preencha o Tipo</div>
+							<div ng-show="Acervoform.tipo.$error.minlength">Tipo precisa ter pelo menos 2 caracteres</div>
+		    		  	</div>
+			    		<br>
+						<button type="button" class="btn btn-info" ng-click="novo()">Novo</button>
+						<button type="submit" class="btn btn-success" >Salvar</button>
+						<button type="button" class="btn btn-danger" ng-click="excluir()">Excluir</button>
+						<hr/>
+					  <div class="form-group col-md-2">
+					    <label for="exampleInputCodigo">Codigo</label>
+					    <input type="number" disabled="true" class="form-control" ng-model="acervo.codigo" name="emprestimo" placeholder="Codigo">
+					  </div>
+					  
+					  <div class="form-group col-md-8">
+					    <label for="exampleInputNome">Descrição</label>
+					    <input type="text" class="form-control" ng-model="acervo.descricao" name="descricao" placeholder="Insira a Descrição"  ng-minlength="8" required>
+					  </div>
+					  
+					  <div class="form-group col-md-2">
+					    <label for="exampleInputCargo">Tipo</label>
+					    <input type="text" class="form-control" ng-model="acervo.tipoAcervo" name="tipo" placeholder="Insira o Tipo" ng-minlength="2" required>
+					  </div>
+					</form>
+			    </div>
+			    <div role="tabpanel" class="tab-pane" id="dados">
+				<br>
+				<input type="text" class="form-control" ng-model="criterio" 
+				placeholder="O que voce esta procurando?" /><br>
+			    	<table class="table table-hover">
+			    		<th>Código</th><th>Descrição</th><th>Tipo</th>
+
+			    		<tr ng-repeat="acervoTabela in acervos | filter:criterio" ng-click="seleciona(acervoTabela);">
+			    			<td>{{acervoTabela.codigo}}</td><td>{{acervoTabela.descricao}}</td><td>{{acervoTabela.tipoAcervo}}</td>
+			    		</tr>
+					</table>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

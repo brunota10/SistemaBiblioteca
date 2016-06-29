@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="emprestimoModule">
+<head>
+	<meta-charset="utf-8">
+	<title>emprestimo</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="control/emprestimoControl.js"></script>
+</head>
+<body ng-controller="emprestimoControl">
+	<div ng-include="'menu.html'"></div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Cadastro de emprestimo</div>
+		<div class="panel-body">
+			<div>
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active">
+			    	<a href="#cadastro" aria-controls="cadastro" role="tab" data-toggle="tab">Cadastro</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados</a>
+			    </li>
+			  </ul>
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+			    <div role="tabpanel" class="tab-pane active" id="cadastro">
+			    	<form name="Emprestimoform" class="css-form" ng-submit="Emprestimoform.$valid && salvar()" novalidate>
+			    	<br>
+						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>
+				    	<div ng-show="Emprestimoform.$submitted">
+							<div ng-show="Emprestimoform.emprestimo.$error.required">Preencha a data do Emprestimo</div>
+		    		  </div> 
+			    	<br>
+						<button type="button" class="btn btn-info" ng-click="novo()">Novo</button>
+						<button type="submit" class="btn btn-success">Salvar</button>
+						<button type="button" class="btn btn-danger" ng-click="excluir()">Excluir</button>
+					<hr/>
+					  <div class="form-group col-md-2">
+					    <label for="exampleInputCodigo">Código</label>
+					    <input type="number" disabled="true" class="form-control" ng-model="emprestimo.codigo" placeholder="Codigo">
+					  </div>
+					  
+					  <div class="form-group col-md-10">
+					    <label for="exampleInputCodigo">Aluno</label>
+					    	<div>
+						    	<select class="form-control"
+						    	ng-model="emprestimo.aluno"
+						    	ng-options="aluno.nome for aluno in alunos track by aluno.codigo">
+						    	</select>
+					    	</div>
+					  </div>
+					  
+					  <div class="form-group col-md-6">
+					    <label for="exampleInputCargo">Data do Emprestimo</label>
+					    <input type="date" class="form-control" ng-model="emprestimo.dataEmprestimo" name="emprestimo" placeholder="Insira a data de emprestimo" required="">
+					  </div>
+					  
+					  <div class="form-group col-md-6">
+					    <label for="exampleInputCargo">Data da Devolução</label>
+					    <input type="date" class="form-control" ng-model="emprestimo.dataDevolucao" name="devolucao" placeholder="Insira a data de devolucao">
+					  </div>
+					</form>
+			    </div>
+			    <div role="tabpanel" class="tab-pane" id="dados">
+				<br>
+				<input type="text" class="form-control" ng-model="criterio" 
+				placeholder="O que voce esta procurando?" /><br>
+			    	<table class="table table-hover">
+			    		<th>Código</th><th>Aluno</th><th>Data do empréstimo</th><th>Data da devolução</th>
+			    		<tr ng-repeat="emprestimoTabela in emprestimos | filter:criterio" ng-click="seleciona(emprestimoTabela);">
+			    			<td>{{emprestimoTabela.codigo}}</td><td>{{emprestimoTabela.aluno.nome}}</td><td>{{emprestimoTabela.dataEmprestimo | date:'d/M/yyyy'}}</td><td>{{emprestimoTabela.dataDevolucao | date:'d/M/yyyy'}}</td>
+			    		</tr>
+					</table>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
